@@ -21,12 +21,13 @@ def quadratic_3(v, hess=True):
     h = 2 * Q if hess else None
     return f, g, h
 
-def rosenbrock(v, hess=True):
-    x, y = v
-    f = 100 * (y - x**2)**2 + (1 - x)**2
-    g = np.array([400*x**3 + 400*x*y +2*x - 2, 200 * (y - x**2)])
-    h = np.array([[1200*x**2 - 400*y+2, -400*x],[-400 * x, 200]])if hess else None
-    return f, g, h
+def rosenbrock(x, hess=True):
+    f = (1 - x[0]) ** 2 + 100 * (x[1] - x[0] ** 2) ** 2
+    g = np.array([-2 * (1 - x[0]) - 400 * x[0] * (x[1] - x[0] ** 2),
+                  200 * (x[1] - x[0] ** 2)])
+    h = np.array([[2 - 400 * x[1] + 1200 * x[0] ** 2, -400 * x[0]],
+                  [-400 * x[0], 200]])
+    return f, g, h if hess else None
 
 def linear(v, hess=False):
     f = np.array([1,1])*v
